@@ -23,6 +23,7 @@ class Sport(models.Model):
 
 class Contest(models.Model):
     name = models.CharField(max_length=128)
+    sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     max_gamer_amount = models.IntegerField()
     game_date = models.DateTimeField('game date')

@@ -1,0 +1,16 @@
+<h1>{{ sport.name }}</h1>
+
+<p>Here is {{ sport.name }}, Please join</p>
+
+<h2>Contests:</h2>
+{% if contests %}
+    <ul>
+        {% for contest in contests %}
+            <div>
+                <a href='{% url "contest" contest.id %}'>{{ contest.name }}</a>
+            </div>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>It`s Not Contest</p>
+{% endif %}

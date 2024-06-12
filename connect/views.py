@@ -1,19 +1,31 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import loader
+from django.shortcuts import get_object_or_404, get_list_or_404
 
 from .models import User, Sport, Contest
 
 
 # Create your views here.
 def index(request):
-    user_list = User.objects.all()
-    print(user_list)
-    template = loader.get_template('connect/users.html')
+    sport_list = Sport.objects.all()
+    context = {'sport_list': sport_list}
+    return render(request, 'connect/index.html', context)
+
+
+def sport(request, sport_id):
+    sport = get_object_or_404(Sport, pk=sport_id)
+    contests = get_list_or_404(Contest, sport=sport)
     context = {
-        'user_list': user_list
+        'sport': sport,
+        'contests': contests,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'connect/sport.html', context)
+
+
+def contest(request, contest_id):
+    context = {}
+    return render(request, 'connect/contest.html', context)
 
 
 def all_contest(request):

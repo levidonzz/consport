@@ -1,1 +1,13 @@
 <h1>Connect Page</h1>
+
+{% if sport_list %}
+    <ul>
+        {% for sport in sport_list %}
+            <li>
+                <a href='{% url "sports" sport.id %}'><p>{{ sport.name }}</p></a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+     <p>Not sport</p>
+{% endif %}
