@@ -26,6 +26,7 @@ class Contest(models.Model):
     sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     max_gamer_amount = models.IntegerField()
+    current_gamer_amount = models.IntegerField()
     game_date = models.DateTimeField('game date')
     description = models.CharField(max_length=1024)
     pub_date = models.DateTimeField('published date')

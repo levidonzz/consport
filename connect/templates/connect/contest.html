@@ -1,1 +1,18 @@
-<h1>Contest Page</h1>
+<h1>{{ contest.name }}</h1>
+
+<h2>Created by: {{ contest.creator }}</h2>
+
+<p>Number of Player: {{ contest.max_gamer_amount }}</p>
+<p>Game Date: {{ contest.game_date }}</p>
+<p>Description: {{ contest.description }}</p>
+<p>Public Date: {{ contest.pub_date }}</p>
+
+<form action='{% url "connect:join_contest" %}' method='post'>
+{% csrf_token %}
+<fieldset>
+    <input name='Name' value={{ user_id }}>
+    <label>Name</label>
+</fieldset>
+<input type='submit' value='Submit'>
+</form>
+

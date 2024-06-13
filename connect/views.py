@@ -8,7 +8,7 @@ from .models import User, Sport, Contest
 
 # Create your views here.
 def index(request):
-    sport_list = Sport.objects.all()
+    sport_list = get_list_or_404(Sport)
     context = {'sport_list': sport_list}
     return render(request, 'connect/index.html', context)
 
@@ -24,17 +24,34 @@ def sport(request, sport_id):
 
 
 def contest(request, contest_id):
-    context = {}
+    contest = get_object_or_404(Contest, pk=contest_id)
+    context = {
+        'contest': contest
+    }
     return render(request, 'connect/contest.html', context)
 
 
-def all_contest(request):
-    contest_list = Contest.objects.all()
-    output = ','.join([contest.name for contest in contest_list])
-    return HttpResponse(output)
-
-
 def all_user(request):
-    user_list = User.objects.all()
-    output = ','.join([user for user in user_list])
-    return HttpResponse(output)
+    user_list = get_list_or_404(User)
+    context = {
+        'user_list': user_list
+    }
+    return render(request, 'connect/users.html', context)
+
+
+def user(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    context = {
+        'user': user
+    }
+    return render(request, 'connect/user.html', context)
+
+
+def join_contest(request, user_id, contest_id):
+    user = get_object_or_404(User, pk=user_id)
+    contest = get_object_or_404(Contest, pk=contest_id)
+    contest.objects.update()
+    context = {
+        'user': user,
+    }
+    return render(request, 'connect/index.html', context)
