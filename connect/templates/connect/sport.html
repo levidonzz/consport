@@ -14,3 +14,24 @@
 {% else %}
     <p>It`s Not Contest</p>
 {% endif %}
+
+<fieldset>
+    <form action='{% url "connect:create_contest" %}' method='post'>
+    {% csrf_token %}
+            <h2>Choose a sport</h2>
+                <select >
+                    {% for sport in sport_list %}
+                        <option value={{ sport.id }}>{{ sport.name }}</option>
+                    {% endfor %}
+                </select>
+                <div>
+                    <label for='contest_name'>Contest Name</label>
+                    <input type='text' name='contest_name'></input><br>
+                    <label for='contest_gamer_amount'>Number</label>
+                    <input type='number' name='contest_gamer_amount'></input><br>
+                    <label for='contest_date'>Contest Date</label>
+                    <input type='date' name='contest_date'></input><br>
+                </div>
+        <input type='submit' value='Create' ></input>
+    </form>
+</fieldset>

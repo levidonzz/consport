@@ -16,9 +16,11 @@ def index(request):
 def sport(request, sport_id):
     sport = get_object_or_404(Sport, pk=sport_id)
     contests = get_list_or_404(Contest, sport=sport)
+    sport_list = get_list_or_404(Sport)
     context = {
         'sport': sport,
         'contests': contests,
+        'sport_list': sport_list,
     }
     return render(request, 'connect/sport.html', context)
 
@@ -55,3 +57,9 @@ def join_contest(request, user_id, contest_id):
         'user': user,
     }
     return render(request, 'connect/index.html', context)
+
+
+def create_contest(request):
+    new_contest = Contest.objects.create()
+    print('test create contest')
+    

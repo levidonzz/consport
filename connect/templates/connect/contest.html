@@ -2,10 +2,10 @@
 
 <h2>Created by: {{ contest.creator }}</h2>
 
-<p>Number of Player: {{ contest.max_gamer_amount }}</p>
 <p>Game Date: {{ contest.game_date }}</p>
 <p>Description: {{ contest.description }}</p>
 <p>Public Date: {{ contest.pub_date }}</p>
+<p>Player: {{contest.current_gamer_amount}} / {{contest.max_gamer_amount}}</p>
 
 <form action='{% url "connect:join_contest" %}' method='post'>
 {% csrf_token %}

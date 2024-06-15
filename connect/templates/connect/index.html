@@ -6,7 +6,7 @@
     <ul>
         {% for sport in sport_list %}
             <li>
-                <a href='{% url "connect:sports" sport.id %}'><p>{{ sport.name }}</p></a>
+                <a href='{% url "connect:sport" sport.id %}'><p>{{ sport.name }}</p></a>
             </li>
         {% endfor %}
     </ul>
