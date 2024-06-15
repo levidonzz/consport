@@ -10,8 +10,8 @@
 <form action='{% url "connect:join_contest" %}' method='post'>
 {% csrf_token %}
 <fieldset>
-    <input name='Name' value={{ user_id }}>
     <label>Name</label>
+    <input name='Name'>
 </fieldset>
 <input type='submit' value='Submit'>
 </form>

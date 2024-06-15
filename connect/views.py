@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import loader
 from django.shortcuts import get_object_or_404, get_list_or_404
+import datetime
 
 from .models import User, Sport, Contest
 
@@ -60,6 +61,18 @@ def join_contest(request, user_id, contest_id):
 
 
 def create_contest(request):
-    new_contest = Contest.objects.create()
-    print('test create contest')
-    
+    print('---------------------------')
+    contest = Contest(
+        name='test',
+        max_gamer_amount=1,
+        game_date=datetime.datetime.now(),
+        pub_date=datetime.datetime.now(),
+        update_date=datetime.datetime.now(),
+    )
+    contest.save()
+
+    return render(request, 'connect/index.html')
+
+
+def success(request):
+    return render(request, 'connect/success.html')
