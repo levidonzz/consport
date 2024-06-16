@@ -68,10 +68,14 @@ def create_contest(request):
         game_date=datetime.datetime.now(),
         pub_date=datetime.datetime.now(),
         update_date=datetime.datetime.now(),
+        creator_id = 1,
+        sport_id = 1,
+        current_gamer_amount = 1,
+        current_gamer = 1,
     )
     contest.save()
 
-    return render(request, 'connect/index.html')
+    return render(request, 'connect/success.html')
 
 
 def success(request):
