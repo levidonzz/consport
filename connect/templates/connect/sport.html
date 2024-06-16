@@ -1,3 +1,5 @@
+{% include 'connect/header.html' %}
+
 <h1>{{ sport.name }}</h1>
 
 <p>Here is {{ sport.name }}, Please join</p>
@@ -16,7 +18,7 @@
 {% endif %}
 
 <fieldset>
-    <h2>Choose a sport</h2>
+    <h4>Choose a Sport</h4>
     <select >
         {% for sport in sport_list %}
             <option value={{ sport.id }}>{{ sport.name }}</option>

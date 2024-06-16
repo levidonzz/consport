@@ -61,7 +61,6 @@ def join_contest(request, user_id, contest_id):
 
 
 def create_contest(request):
-    print('---------------------------')
     contest = Contest(
         name='test',
         max_gamer_amount=1,
