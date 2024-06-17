@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import get_object_or_404, get_list_or_404
 import datetime
 
 from .models import User, Sport, Contest
+from .forms import Register
 
 
 # Create your views here.
@@ -62,7 +63,7 @@ def join_contest(request, user_id, contest_id):
 
 def create_contest(request):
     contest = Contest(
-        name='test',
+        name=request.POST.get('contest_name', None),
         max_gamer_amount=1,
         game_date=datetime.datetime.now(),
         pub_date=datetime.datetime.now(),
@@ -79,3 +80,16 @@ def create_contest(request):
 
 def success(request):
     return render(request, 'connect/success.html')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = Register(request.POST)
+        print(form.data['name'])
+        print(form.data['test'])
+        if form.is_valid():
+            return HttpResponseRedirect('connect/success.html')
+    else:
+        form = Register()
+
+    return render(request, 'connect/register.html', {'form': form})
