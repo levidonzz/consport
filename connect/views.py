@@ -85,9 +85,8 @@ def success(request):
 def register(request):
     if request.method == 'POST':
         form = Register(request.POST)
-        print(form.data['name'])
-        print(form.data['test'])
         if form.is_valid():
+            print(form.cleaned_data['name'])
             return HttpResponseRedirect('connect/success.html')
     else:
         form = Register()
