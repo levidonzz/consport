@@ -15,3 +15,11 @@ def add_user(request):
         form = UserForm(request.POST)
         if form.is_valid():
             return HttpResponseRedirect('user/success.html')
+        
+    else:
+        form = UserForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'user/register.html', context)

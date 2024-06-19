@@ -1,7 +1,5 @@
 from django import forms
 
-from sport.models import Sport
-
 
 class UserForm(forms.Form):
     email = forms.EmailField(label='Email')
