@@ -31,7 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'connect.apps.ConnectConfig',
+    'user.apps.UserConfig',
+    'sport.apps.SportConfig',
+    'contest.apps.ContestConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
