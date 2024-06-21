@@ -1,1 +1,17 @@
 <h1>Home Page</h1>
+
+<a href="{% url "sport:sign_up" %}">Sign Up</a><br>
+<a href="{% url "sport:sign_in" %}">Sign In</a>
+
+{% if user_list %}
+    <h3>User List:</h3>
+    <ul>
+        {% for user in user_list %}
+            <li>
+                {{ user.username }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Its not user</p>
+{% endif %}
