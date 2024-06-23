@@ -1,0 +1,10 @@
+<h1>Sign In Page</h1>
+
+<form action="{% url "sport:sign_in" %}" action='POST'>
+{% csrf_token %}
+    <label for="email">Email</label>
+    <input type="email" id='email' name='email'>
+    <label for="password">Password</label>
+    <input type="password" id='password' name='password'>
+    <input type="submit" value='Sign In'>
+</form>

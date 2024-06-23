@@ -6,9 +6,8 @@ def add_user():
 
 
 def get_user_list():
-    pass
-    # user_list = User.objects.all()
-    # if user_list:
-    #     return user_list
-    # else:
-    #     return 'error'
+    user_list = User.objects.all()
+    if user_list:
+        return user_list
+    else:
+        return 'error'
