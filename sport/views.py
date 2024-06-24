@@ -1,65 +1,48 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
-from django.contrib import messages
-from datetime import datetime
+from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.http import HttpResponse
+from django.contrib.auth.models import User
 
-from .common import *
-from .models import User
 
-# Create your views here.
 def index(request):
-    is_sign_in = False
+    user_list = User.objects.all()
     context = {
-
+        'user_list': user_list,
     }
     return render(request, 'sport/index.html', context)
-
-
-def sign_up(request):
-    return render(request, 'sport/sign_up.html')
-
+    
 
 def sign_in(request):
     if request.method == 'POST':
-        email = request.POST['email']
+        username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(request, username=email, password=password)
-        print(user)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, 'Sign in successful!')
             return redirect('sport:index')
         else:
             messages.error(request, 'Invalid email or password')
-            print('error')
-        return redirect('sign_in')
+            return HttpResponse('Invalid email or password')
     else:
         return render(request, 'sport/sign_in.html')
-    
-
-def sign_out(request):
-    pass
 
 
-def add_user(request):
+def sign_up(request):
     if request.method == 'POST':
         email = request.POST['email']
         username = request.POST['username']
         password = request.POST['password']
-        created_date = datetime.now()
-        user = User.objects.create(
-            email=email,
-            username=username,
-            password=password,
-            created_date=created_date,
-        )
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.is_active = True
         user.save()
-        return HttpResponse('success')
+        messages.success(request, 'Sign Up success, You are automatically logged in.')
+        login(request, user)
+        return render(request, 'sport/sign_in.html')
     else:
-        return HttpResponse('Invalid request method', status=405)
+        return render(request, 'sport/sign_up.html')
+    
 
-
-
-
-
+def sign_out(request):
+    logout(request)
+    return render(request, 'sport/index.html')

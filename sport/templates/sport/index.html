@@ -1,25 +1,29 @@
 <h1>Home Page</h1>
 
-<a href="{% url "sport:sign_up" %}">Sign Up</a><br>
-<a href="{% url "sport:sign_in" %}">Sign In</a>
+{% if user.is_authenticated %}
+    <h4>Username: {{ user.username }}</h4>
+    {% if user_list %}
+        <h3>User List:</h3>
+        <ul>
+            {% for user in user_list %}
+                <li>
+                    {{ user.username }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Its not user</p>
+    {% endif %}
 
-{% if user_list %}
-    <h3>User List:</h3>
-    <ul>
-        {% for user in user_list %}
-            <li>
-                {{ user.username }}
-            </li>
-        {% endfor %}
-    </ul>
+    <a href="{% url "sport:signout" %}">Sign Out</a>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% else %}
-    <p>Its not user</p>
-{% endif %}
-
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
+    <a href="{% url "sport:signin" %}">Sign In</a>
 {% endif %}
