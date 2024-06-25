@@ -1,6 +1,18 @@
-<h1>Home Page</h1>
+{% extends "sport/base.html" %}
 
-{% if user.is_authenticated %}
+{% block content %}
+
+    {% if sport_list %}
+    <ul>
+        {% for sport in sport_list %}
+            <li>
+                <h4><a href="{% url "sport:sport_detail" sport_id=sport.id %}">{{ sport.name }}</a></h4>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if user.is_authenticated %}
     <h4>Username: {{ user.username }}</h4>
     {% if user_list %}
         <h3>User List:</h3>
@@ -24,6 +36,8 @@
             {% endfor %}
         </ul>
     {% endif %}
-{% else %}
+    {% else %}
     <a href="{% url "sport:signin" %}">Sign In</a>
-{% endif %}
+    {% endif %}
+
+{% endblock content %}

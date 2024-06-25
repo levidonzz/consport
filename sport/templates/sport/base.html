@@ -1,0 +1,33 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <!-- Add your CSS links here -->
+</head>
+<body>
+    <header>
+        <!-- Your header content goes here -->
+        <nav>
+            <ul>
+                <li><a href="{% url 'sport:index' %}">Home</a></li>
+                <!-- Add more navigation items as needed -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Your footer content goes here -->
+        <p>&copy; 2024 Levi</p>
+    </footer>
+
+    <!-- Add your JavaScript links here -->
+</body>
+</html>

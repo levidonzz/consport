@@ -1,0 +1,10 @@
+{% extends "sport/base.html" %}
+
+{% block content %}
+
+    <h3>{{ sport.name }}</h3>
+    <h4>{{ sport.description }}</h4>
+
+    <h3><a href="{% url "sport:create_contest" %}">Create Contest</a></h3>
+
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends "sport/base.html" %}
+
+{% block content %}
+
+    <h1>Create Contest Page</h1>
+
+    <form action="{% url "sport:create_contest" %}" method='POST'>
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value='Create'>
+    </form>
+
+{% endblock content %}
