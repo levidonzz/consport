@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -5,7 +6,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from .forms import ContestForm
+from .forms import ContestForm, SignInForm
 from .models import Sport
 
 
@@ -43,19 +44,33 @@ def create_contest(request):
 
     
 # ---------- User ----------
+def user_list(request):
+    user_list = User.objects.all()
+    context = {
+        'user_list': user_list,
+    }
+    return render(request, 'sport/user_list.html', context)
+
+
+def user_detail(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    return render(request, 'sport/user_detail', {'user': user})
+
+
 def sign_in(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
+        form = SignInForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = get_object_or_404(User, username=username)
             login(request, user)
             return redirect('sport:index')
         else:
-            messages.error(request, 'Invalid email or password')
-            return HttpResponse('Invalid email or password')
+            return render(request, 'sport/sign_in.html')
     else:
-        return render(request, 'sport/sign_in.html')
+        form = SignInForm()
+        return render(request, 'sport/sign_in.html', {'form': form})
 
 
 def sign_up(request):
@@ -75,4 +90,4 @@ def sign_up(request):
 
 def sign_out(request):
     logout(request)
-    return render(request, 'sport/index.html')
+    return redirect('sport:index')

@@ -18,3 +18,7 @@ class ContestForm(forms.ModelForm):
         model = Contest
         fields = ['name', 'sport', 'description', 'start_date', 'end_date', 'max_participants']
 
+
+class SignInForm(forms.Form):
+    username = forms.CharField(label='Email')
+    password = forms.CharField(widget=forms.PasswordInput)

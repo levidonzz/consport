@@ -1,13 +1,18 @@
 {% extends "sport/base.html" %}
 
 {% block content %}
+<div class="create-contest">
+    <h1>Create a New Contest</h1>
 
-    <h1>Create Contest Page</h1>
-
-    <form action="{% url "sport:create_contest" %}" method='POST'>
+    <form action="{% url "sport:create_contest" %}" method="post">
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value='Create'>
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <button type="submit">Create Contest</button>
     </form>
-
+</div>
 {% endblock content %}

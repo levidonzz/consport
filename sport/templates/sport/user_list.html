@@ -1,0 +1,32 @@
+{% extends "sport/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="user-list-container">
+        <h1>User List</h1>
+
+        {% if user_list %}
+        <div class="user-cards">
+            {% for user in user_list %}
+            <div class="user-card">
+                <div class="user-avatar">
+                    {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" alt="{{ user.username }}">
+                    {% else %}
+                    <i class="fas fa-user"></i>
+                    {% endif %}
+                </div>
+                <div class="user-info">
+                    <h3>{{ user.username }}</h3>
+                    <p>{{ user.email }}</p>
+                    <a href="{% url 'sport:user_detail' user_id=user.id %}" class="btn">View Profile</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No users found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,11 +1,24 @@
 {% extends "sport/base.html" %}
 
 {% block content %}
+<div class="contest-detail">
+    <h2>{{ contest.name }}</h2>
+    <p>{{ contest.description }}</p>
 
-    <h1>Contest Page</h1>
+    <div class="info">
+        <p>Sport: {{ contest.sport.name }}</p>
+        <p>Start Date: {{ contest.start_date }}</p>
+        <p>End Date: {{ contest.end_date }}</p>
+        <p>Max Participants: {{ contest.max_participants }}</p>
+    </div>
 
-    {{ contest.name }}
-    {{ contest.creator }}
-    {{ contest.max_participants }}
-
+    <div class="participants">
+        <h3>Participants</h3>
+        <ul>
+            {% for participant in contest.participants.all %}
+            <li>{{ participant.username }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock content %}

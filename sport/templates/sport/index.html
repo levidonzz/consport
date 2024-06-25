@@ -1,43 +1,45 @@
 {% extends "sport/base.html" %}
 
 {% block content %}
-
-    {% if sport_list %}
-    <ul>
-        {% for sport in sport_list %}
-            <li>
-                <h4><a href="{% url "sport:sport_detail" sport_id=sport.id %}">{{ sport.name }}</a></h4>
-            </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
+<div class="container">
     {% if user.is_authenticated %}
-    <h4>Username: {{ user.username }}</h4>
-    {% if user_list %}
-        <h3>User List:</h3>
-        <ul>
-            {% for user in user_list %}
-                <li>
-                    {{ user.username }}
-                </li>
-            {% endfor %}
-        </ul>
+    <section class="user-info">
+        <h2>Welcome, {{ user.username }}!</h2>
+        {% if user_list %}
+        <div class="user-list-container">
+            <h3>Other Users</h3>
+            <ul class="user-list">
+                {% for user in user_list %}
+                <li>{{ user.username }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <p>No other users found.</p>
+        {% endif %}
+
+        {% if sport_list %}
+        <section class="featured-sports">
+            <h2>Featured Sports</h2>
+            <div class="sport-cards">
+                {% for sport in sport_list %}
+                <div class="sport-card">
+                    <div class="sport-card-content">
+                        <h3>{{ sport.name }}</h3>
+                        <p>{{ sport.description }}</p>
+                        <a href="{% url "sport:sport_detail" sport_id=sport.id %}" class="btn">Learn More</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </section>
     {% else %}
-        <p>Its not user</p>
+    <div class="cta">
+        <a href="{% url "sport:signin" %}" class="btn">Sign In</a>
+        <p>Don't have an account? <a href="{% url "sport:signup" %}">Sign Up</a></p>
+    </div>
     {% endif %}
-
-    <a href="{% url "sport:signout" %}">Sign Out</a>
-
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    {% else %}
-    <a href="{% url "sport:signin" %}">Sign In</a>
-    {% endif %}
-
+</div>
 {% endblock content %}

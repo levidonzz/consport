@@ -1,0 +1,527 @@
+/* Base styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    background: #1a8754;
+    color: #ffffff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #0d6e3e 3px solid;
+}
+
+header a {
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+header ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+header li {
+    display: inline;
+    padding: 0 20px 0 20px;
+}
+
+header #branding {
+    float: left;
+}
+
+header #branding h1 {
+    margin: 0;
+}
+
+header nav {
+    float: right;
+    margin-top: 10px;
+}
+
+header .highlight, header .current a {
+    color: #e8e8e8;
+    font-weight: bold;
+}
+
+header a:hover {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Main content area */
+main {
+    padding: 20px 0;
+}
+
+h1, h2, h3 {
+    color: #1a8754;
+}
+
+/* Buttons */
+.button {
+    background-color: #1a8754;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #0d6e3e;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    margin-top: 20px;
+    color: #ffffff;
+    background-color: #1a8754;
+    text-align: center;
+}
+
+/* Add these styles to your existing CSS file */
+
+/* Container */
+.container {
+    padding: 20px;
+}
+
+/* Intro section */
+.intro {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.intro h1 {
+    color: #1a8754;
+    margin-bottom: 15px;
+}
+
+/* Sport list */
+.sport-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.sport-list li {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.sport-list li:hover {
+    box-shadow: 0 0 15px rgba(26,135,84,0.2);
+    transform: translateY(-5px);
+}
+
+.sport-list a {
+    text-decoration: none;
+    color: #1a8754;
+}
+
+/* User info section */
+.user-info {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.user-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background-color: #1a8754;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0d6e3e;
+}
+
+/* sign in */
+/* Form styles */
+.form-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-container h1 {
+    text-align: center;
+    color: #1a8754;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group input[type="submit"] {
+    background-color: #1a8754;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #0d6e3e;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-footer a {
+    color: #1a8754;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* sign up */
+/* Form styles */
+.form-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-container h1 {
+    text-align: center;
+    color: #1a8754;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group input[type="submit"] {
+    background-color: #1a8754;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #0d6e3e;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-footer a {
+    color: #1a8754;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Messages */
+.messages {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.messages li {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.success {
+    background-color: #d4edda !important;
+    color: #155724 !important;
+}
+
+/* sport detail */
+/* Sport Detail Styles */
+.sport-detail {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.sport-detail h3 {
+    color: #1a8754;
+    margin-bottom: 10px;
+}
+
+.sport-detail h4 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.sport-detail a {
+    display: inline-block;
+    background-color: #1a8754;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sport-detail a:hover {
+    background-color: #0d6e3e;
+}
+
+/* contest detail */
+/* Contest Detail Styles */
+.contest-detail {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.contest-detail h2 {
+    color: #1a8754;
+    margin-bottom: 10px;
+}
+
+.contest-detail p {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.contest-detail .info {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.contest-detail .info p {
+    margin-bottom: 5px;
+}
+
+.contest-detail .participants {
+    margin-top: 20px;
+}
+
+.contest-detail .participants h3 {
+    color: #1a8754;
+    margin-bottom: 10px;
+}
+
+.contest-detail .participants ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.contest-detail .participants li {
+    margin-bottom: 5px;
+}
+
+/* create contest */
+/* Create Contest Styles */
+.create-contest {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.create-contest h1 {
+    color: #1a8754;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.create-contest form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+}
+
+.create-contest .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-contest label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.create-contest input,
+.create-contest textarea,
+.create-contest select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.create-contest textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.create-contest button[type="submit"] {
+    background-color: #1a8754;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-contest button[type="submit"]:hover {
+    background-color: #0d6e3e;
+}
+
+/* user list */
+/* User List Container */
+.user-list-container {
+    padding: 3rem 2rem;
+}
+
+.user-list-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* User Cards */
+.user-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.user-card {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 1.5rem;
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-avatar i {
+    font-size: 3rem;
+    color: #ccc;
+}
+
+.user-info h3 {
+    margin-bottom: 0.5rem;
+}
+
+.user-info p {
+    color: #666;
+    margin-bottom: 1rem;
+}
