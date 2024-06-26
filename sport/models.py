@@ -18,6 +18,7 @@ class Contest(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     max_participants = models.PositiveIntegerField()
+    participants = models.ManyToManyField(User, related_name='participanted_contests', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 

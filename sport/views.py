@@ -1,5 +1,6 @@
+from email import message
 import re
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponse
@@ -7,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .forms import ContestForm, SignInForm
-from .models import Sport
+from .models import Sport, Contest
 
 
 def index(request):
@@ -23,10 +24,44 @@ def index(request):
 # ---------- Contest ----------
 def sport_detail(request, sport_id):
     sport = get_object_or_404(Sport, pk=sport_id)
+    contest_list = get_list_or_404(Contest, sport=sport)
     context = {
         'sport': sport,
+        'contest_list': contest_list,
     }
     return render(request, 'sport/sport_detail.html', context)
+
+
+def contest_detail(request, contest_id):
+    contest = get_object_or_404(Contest, id=contest_id)
+    return render(request, 'sport/contest_detail.html', {'contest': contest})
+
+
+def join_contest(request, contest_id):
+    user = request.user
+    contest = get_object_or_404(Contest, id=contest_id)
+
+    if request.method == 'POST':
+        if contest.participants.count() >= contest.max_participants:
+            messages.error(request, 'This contest is already fully')
+        elif user in contest.participants.all():
+            messages.error(request, 'You are already a participant in this contest.')
+        else:
+            contest.participants.add(user)
+            messages.success(request, 'You have successfully joined the contest')
+    return redirect('sport:contest_detail', contest_id=contest_id)
+
+
+def unjoin(request, contest_id):
+    contest = get_object_or_404(Contest, id=contest_id)
+    user = request.user
+    if request.method == 'POST':
+        if user in contest.participants.all():
+            contest.participants.remove(user)
+            messages.success(request, 'You are already cancel this contest.')
+        else:
+            messages.error(request, 'You have not join this contest')
+    return redirect('sport:contest_detail', contest_id=contest_id)
 
 
 @login_required

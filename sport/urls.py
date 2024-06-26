@@ -14,6 +14,9 @@ urlpatterns = [
     path('create_contest', views.create_contest, name='create_contest'),
     path('user_list', views.user_list, name='user_list'),
     path('user_list/<int:user_id>', views.user_detail, name='user_detail'),
+    path('contest/<int:contest_id>', views.contest_detail, name='contest_detail'),
+    path('contest/<int:contest_id>/join', views.join_contest, name='join_contest'),
+    path('contest/<int:contest_id>/unjoin', views.unjoin, name='unjoin'),
 ]
 
 if settings.DEBUG:

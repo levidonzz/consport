@@ -16,9 +16,34 @@
         <h3>Participants</h3>
         <ul>
             {% for participant in contest.participants.all %}
-            <li>{{ participant.username }}</li>
+            <li>
+                {{ participant.username }}
+                {% if user.username == participant.username %}
+                <form action="{% url "sport:unjoin" contest.id %}" method='POST'>
+                    {% csrf_token %}
+                    <button type='submit'>Unjoin</button>
+                </form>
+                {% endif %}
+            </li>
             {% endfor %}
         </ul>
+    </div>
+
+    <div>
+        {% if user.is_authenticated %}
+            {% if user in contest.participants.all %}
+                <p>You are already a participant in this contest.</p>
+            {% elif contest.participants.count >= contest.max_participants %}
+                <p>This contest is already full.</p>
+            {% else %}
+                <form method="post" action="{% url 'sport:join_contest' contest.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Join Contest</button>
+                </form>
+            {% endif %}
+        {% else %}
+            <p>Please <a href="{% url 'login' %}">log in</a> to join this contest.</p>
+        {% endif %}
     </div>
 </div>
 {% endblock content %}

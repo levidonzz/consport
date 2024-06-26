@@ -5,6 +5,16 @@
     <h3>{{ sport.name }}</h3>
     <h4>{{ sport.description }}</h4>
 
+    <ul>
+        {% for contest in contest_list %}
+        <li>
+            <a href="{% url "sport:contest_detail" contest_id=contest.id %}">{{ contest.name }}</a>
+            <p>{{ contest.description }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+
     <h3><a href="{% url "sport:create_contest" %}">Create Contest</a></h3>
 
 {% endblock content %}
