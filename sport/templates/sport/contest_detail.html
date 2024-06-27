@@ -1,49 +1,81 @@
 {% extends "sport/base.html" %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/contest_detail.css' %}">
+
+{% block title %}SportZone - {{ contest.name }}{% endblock %}
 
 {% block content %}
-<div class="contest-detail">
-    <h2>{{ contest.name }}</h2>
-    <p>{{ contest.description }}</p>
+<div class="container">
+    <div class="contest-detail">
+        <h1 class="contest-title">{{ contest.name }}</h1>
+        <p class="contest-description">{{ contest.description }}</p>
 
-    <div class="info">
-        <p>Sport: {{ contest.sport.name }}</p>
-        <p>Start Date: {{ contest.start_date }}</p>
-        <p>End Date: {{ contest.end_date }}</p>
-        <p>Max Participants: {{ contest.max_participants }}</p>
-    </div>
+        <div class="contest-info">
+            <div class="info-item">
+                <span class="info-label">Sport:</span>
+                <span class="info-value">{{ contest.sport.name }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Start Date:</span>
+                <span class="info-value">{{ contest.start_date|date:"F d, Y H:i" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">End Date:</span>
+                <span class="info-value">{{ contest.end_date|date:"F d, Y H:i" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Max Participants:</span>
+                <span class="info-value">{{ contest.max_participants }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Creator:</span>
+                <span class="info-value">{{ contest.creator }}</span>
+            </div>
+        </div>
 
-    <div class="participants">
-        <h3>Participants</h3>
-        <ul>
-            {% for participant in contest.participants.all %}
-            <li>
-                {{ participant.username }}
-                {% if user.username == participant.username %}
-                <form action="{% url "sport:unjoin" contest.id %}" method='POST'>
-                    {% csrf_token %}
-                    <button type='submit'>Unjoin</button>
-                </form>
+        <div class="participants-section">
+            <h2>Participants</h2>
+            <ul class="participants-list">
+                {% for participant in contest.participants.all %}
+                <li class="participant-item">
+                    <a href="{% url "sport:user_detail" participant.id %}">{{ participant.username }}</a>
+                    {% if user.username == participant.username %}
+                    <form action="{% url 'sport:unjoin' contest.id %}" method='POST' class="unjoin-form">
+                        {% csrf_token %}
+                        <button type='submit' class="btn btn-danger btn-sm">Unjoin</button>
+                    </form>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="join-section">
+            {% if user.is_authenticated %}
+                {% if user in contest.participants.all %}
+                    <p class="alert alert-info">You are already a participant in this contest.</p>
+                {% elif contest.participants.count >= contest.max_participants %}
+                    <p class="alert alert-warning">This contest is already full.</p>
+                {% else %}
+                    <form method="post" action="{% url 'sport:join_contest' contest.id %}" class="join-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Join Contest</button>
+                    </form>
                 {% endif %}
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div>
-        {% if user.is_authenticated %}
-            {% if user in contest.participants.all %}
-                <p>You are already a participant in this contest.</p>
-            {% elif contest.participants.count >= contest.max_participants %}
-                <p>This contest is already full.</p>
             {% else %}
-                <form method="post" action="{% url 'sport:join_contest' contest.id %}">
+                <p class="alert alert-warning">Please <a href="{% url 'login' %}">log in</a> to join this contest.</p>
+            {% endif %}
+        </div>
+
+        <div>
+            {% if user == contest.creator %}
+                <form action="{% url 'sport:cancel_contest' contest.id %}" method="POST" style="display: inline;">
                     {% csrf_token %}
-                    <button type="submit">Join Contest</button>
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this contest?');">Cancel Contest</button>
                 </form>
             {% endif %}
-        {% else %}
-            <p>Please <a href="{% url 'login' %}">log in</a> to join this contest.</p>
-        {% endif %}
+        </div>
     </div>
 </div>
 {% endblock content %}

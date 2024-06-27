@@ -1,4 +1,9 @@
 {% extends "sport/base.html" %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/user_list.css' %}">
+
+{% block title %}SportZone - User List{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -19,7 +24,7 @@
                 <div class="user-info">
                     <h3>{{ user.username }}</h3>
                     <p>{{ user.email }}</p>
-                    <a href="{% url 'sport:user_detail' user_id=user.id %}" class="btn">View Profile</a>
+                    <a href="{% url 'sport:user_detail' user_id=user.id %}" class="btn btn-primary">View Profile</a>
                 </div>
             </div>
             {% endfor %}

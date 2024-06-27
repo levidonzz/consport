@@ -1,18 +1,32 @@
 {% extends "sport/base.html" %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/create_contest.css' %}">
+
+{% block title %}SportZone - Create Contest{% endblock %}
 
 {% block content %}
-<div class="create-contest">
-    <h1>Create a New Contest</h1>
+<div class="container">
+    <div class="create-contest">
+        <h1>Create a New Contest</h1>
 
-    <form action="{% url "sport:create_contest" %}" method="post">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="form-group">
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-        </div>
-        {% endfor %}
-        <button type="submit">Create Contest</button>
-    </form>
+        <form action="{% url 'sport:create_contest' %}" method="post" class="create-contest-form">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="error-message">
+                    {% for error in field.errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary btn-block">Create Contest</button>
+        </form>
+    </div>
 </div>
 {% endblock content %}

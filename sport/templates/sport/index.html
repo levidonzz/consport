@@ -1,44 +1,46 @@
 {% extends "sport/base.html" %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+{% block title %}SportZone - Home{% endblock %}
 
 {% block content %}
+<div class="hero">
+    <h1>Welcome to SportZone</h1>
+    <p>Your ultimate destination for sports enthusiasts</p>
+</div>
+
 <div class="container">
     {% if user.is_authenticated %}
-    <section class="user-info">
-        <h2>Welcome, {{ user.username }}!</h2>
-        {% if user_list %}
-        <div class="user-list-container">
-            <h3>Other Users</h3>
-            <ul class="user-list">
-                {% for user in user_list %}
-                <li>{{ user.username }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% else %}
-        <p>No other users found.</p>
-        {% endif %}
-
+    <section class="user-dashboard">
+        <h2>Your Sports Dashboard</h2>
         {% if sport_list %}
         <section class="featured-sports">
-            <h2>Featured Sports</h2>
+            <h3>Featured Sports</h3>
             <div class="sport-cards">
                 {% for sport in sport_list %}
                 <div class="sport-card">
                     <div class="sport-card-content">
-                        <h3>{{ sport.name }}</h3>
-                        <p>{{ sport.description }}</p>
-                        <a href="{% url "sport:sport_detail" sport_id=sport.id %}" class="btn">Learn More</a>
+                        <h4 class="sport-card-title">{{ sport.name }}</h4>
+                        <p class="sport-card-description">{{ sport.description|truncatewords:20 }}</p>
+                        <a href="{% url 'sport:sport_detail' sport_id=sport.id %}" class="sport-card-button">Learn More</a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         </section>
+        {% else %}
+        <p>No sports available at the moment. Check back later!</p>
         {% endif %}
     </section>
     {% else %}
-    <div class="cta">
-        <a href="{% url "sport:signin" %}" class="btn">Sign In</a>
-        <p>Don't have an account? <a href="{% url "sport:signup" %}">Sign Up</a></p>
+    <div class="cta-section">
+        <h2>Join SportZone Today!</h2>
+        <p>Sign up now to access exclusive sports content and connect with other fans.</p>
+        <div class="cta-buttons">
+            <a href="{% url 'sport:signin' %}" class="btn btn-primary">Sign In</a>
+        </div>
     </div>
     {% endif %}
 </div>

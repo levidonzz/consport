@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Sport, Contest
+from .models import Sport, Contest, CustomUser
 
 
 # Register your models here.

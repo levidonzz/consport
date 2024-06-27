@@ -1,5 +1,20 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.db import models
+from django.dispatch import receiver
+from django.core.files.base import ContentFile
+from django.contrib.auth import get_user_model
+
+from .utils import generate_avatar
+
+
+User = get_user_model()
+
+@receiver
+def create_user_avatar(sender, instance, created, **kwargs):
+    if created:
+        avatar_svg = generate_avatar(instance)
+        avatar_filename = f'avatar_{instance.id}.svg'
+        instance.avatar.save(avatar_filename, ContentFile(avatar_svg), save=True)
 
 
 class Sport(models.Model):
@@ -18,10 +33,18 @@ class Contest(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     max_participants = models.PositiveIntegerField()
-    participants = models.ManyToManyField(User, related_name='participanted_contests', blank=True)
+    participants = models.ManyToManyField(User, related_name='participated_contests', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
+    
+
+class CustomUser(User):
+    avatar = models.FileField(upload_to='avatars/', blank=True, null=True)
+
+    def __str__(self):
+        return self.username
+    
     

@@ -3,16 +3,16 @@ import re
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.http import HttpResponse
-from django.contrib.auth.models import User
+from django.http import Http404, HttpResponse
+# from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from .forms import ContestForm, SignInForm
-from .models import Sport, Contest
+from .forms import ContestForm, SignInForm, SignUpForm
+from .models import Sport, Contest, CustomUser
 
 
 def index(request):
-    user_list = User.objects.all()
+    user_list = CustomUser.objects.all()
     sport_list = Sport.objects.all()
     context = {
         'user_list': user_list,
@@ -23,13 +23,17 @@ def index(request):
 
 # ---------- Contest ----------
 def sport_detail(request, sport_id):
-    sport = get_object_or_404(Sport, pk=sport_id)
-    contest_list = get_list_or_404(Contest, sport=sport)
-    context = {
-        'sport': sport,
-        'contest_list': contest_list,
-    }
-    return render(request, 'sport/sport_detail.html', context)
+    try:
+        sport = get_object_or_404(Sport, pk=sport_id)
+        contest_list = get_list_or_404(Contest, sport=sport)
+        context = {
+            'sport': sport,
+            'contest_list': contest_list,
+        }
+        return render(request, 'sport/sport_detail.html', context)
+    except Http404:
+        return render(request, 'sport/create_contest.html')
+
 
 
 def contest_detail(request, contest_id):
@@ -72,15 +76,36 @@ def create_contest(request):
             contest = form.save(commit=False)
             contest.creator = request.user
             contest.save()
-            return render(request, 'sport/contest_detail.html', {'contest': contest})
+            contest.participants.add(request.user)
+            form.save_m2m()
+            messages.success(request, 'Contest created successfully.')
+            return redirect('sport:contest_detail', contest_id=contest.id)
     else:
         form = ContestForm()
     return render(request, 'sport/create_contest.html', {'form': form})
 
+
+@login_required
+def cancel_contest(request, contest_id):
+    contest = get_object_or_404(Contest, id=contest_id)
+
+    if request.user != contest.creator:
+        messages.error(request, "You don't have permission to cancel this contest.")
+        return redirect('sport:contest_detail', contest_id=contest.id)
+    if request.method == 'POST':       
+        # Store the sport_id before deleting the contest
+        sport_id = contest.sport.id
+        # Delete the contest
+        contest.delete()
+        messages.success(request, "Contest has been successfully cancelled.")
+        return redirect('sport:sport_detail', sport_id=sport_id)
+    
+    return redirect('sport:contest_detail', contest_id=contest_id)
+
     
 # ---------- User ----------
 def user_list(request):
-    user_list = User.objects.all()
+    user_list = CustomUser.objects.all()
     context = {
         'user_list': user_list,
     }
@@ -88,8 +113,11 @@ def user_list(request):
 
 
 def user_detail(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    return render(request, 'sport/user_detail', {'user': user})
+    user = get_object_or_404(CustomUser, pk=user_id)
+    context = {
+        'user': user,
+    }
+    return render(request, 'sport/user_detail.html', context)
 
 
 def sign_in(request):
@@ -98,7 +126,7 @@ def sign_in(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = get_object_or_404(User, username=username)
+            user = get_object_or_404(CustomUser, username=username)
             login(request, user)
             return redirect('sport:index')
         else:
@@ -110,17 +138,15 @@ def sign_in(request):
 
 def sign_up(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        username = request.POST['username']
-        password = request.POST['password']
-        user = User.objects.create_user(username=username, email=email, password=password)
-        user.is_active = True
-        user.save()
-        messages.success(request, 'Sign Up success, You are automatically logged in.')
-        login(request, user)
-        return render(request, 'sport/sign_in.html')
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Sign Up success, You are automatically logged in.')
+            return redirect('sport:index')
     else:
-        return render(request, 'sport/sign_up.html')
+        form = SignUpForm()
+    return render(request, 'sport/sign_up.html', {'form': form})
     
 
 def sign_out(request):
