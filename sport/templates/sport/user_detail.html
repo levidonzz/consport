@@ -26,7 +26,7 @@
         <div class="profile-content">
             <div class="profile-section">
                 <h2>Created Contests</h2>
-                {% if user.created_contest %}
+                {% if user.created_contest.all %}
                 <ul class="contest-list">
                     {% for contest in user.created_contest.all %}
                     <li class="contest-item">
@@ -42,7 +42,7 @@
 
             <div class="profile-section">
                 <h2>Participated Contests</h2>
-                {% if user.participated_contests %}
+                {% if user.participated_contests.all %}
                 <ul class="contest-list">
                     {% for contest in user.participated_contests.all %}
                     <li class="contest-item">
