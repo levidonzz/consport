@@ -10,7 +10,7 @@ from .utils import generate_avatar
 User = get_user_model()
 
 @receiver
-def create_user_avatar(sender, instance, created, **kwargs):
+def create_user_avatar(instance, created):
     if created:
         avatar_svg = generate_avatar(instance)
         avatar_filename = f'avatar_{instance.id}.svg'
