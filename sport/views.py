@@ -8,7 +8,7 @@ from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from .forms import ContestForm, SignInForm, SignUpForm
-from .models import Sport, Contest, CustomUser, create_user_avatar
+from .models import Sport, Contest, CustomUser
 
 
 def index(request):
@@ -114,6 +114,7 @@ def user_list(request):
 
 def user_detail(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
+    print(user.avatar)
     context = {
         'user': user,
     }
@@ -141,7 +142,6 @@ def sign_up(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            create_user_avatar(user, True)
             login(request, user)
             messages.success(request, 'Sign Up success, You are automatically logged in.')
             return redirect('sport:index')

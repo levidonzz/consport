@@ -3,18 +3,9 @@ from django.db import models
 from django.dispatch import receiver
 from django.core.files.base import ContentFile
 from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
 
 from .utils import generate_avatar
-
-
-User = get_user_model()
-
-@receiver
-def create_user_avatar(instance, created):
-    if created:
-        avatar_svg = generate_avatar(instance)
-        avatar_filename = f'avatar_{instance.id}.svg'
-        instance.avatar.save(avatar_filename, ContentFile(avatar_svg), save=True)
 
 
 class Sport(models.Model):
@@ -42,9 +33,18 @@ class Contest(models.Model):
     
 
 class CustomUser(User):
-    avatar = models.FileField(upload_to='avatars/', blank=True, null=True)
+    avatar = models.FileField(upload_to='sport/static/avatars/', blank=True, null=True)
 
     def __str__(self):
         return self.username
     
+
+@receiver(post_save, sender=CustomUser)
+def create_user_avatar(sender, instance, created, **kwargs):
+    if created:
+        avatar_svg = generate_avatar(instance)
+        avatar_filename = f'avatar_{instance.id}.svg'
+        instance.avatar.save(avatar_filename, ContentFile(avatar_svg), save=True)
+
+
     
